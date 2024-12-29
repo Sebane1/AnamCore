@@ -169,6 +169,7 @@ namespace AnamCore
             }
             return 0;
         }
+
         public async void StopEmote(nint character)
         {
             try
@@ -226,6 +227,22 @@ namespace AnamCore
             catch (Exception e)
             {
                 Plugin.PluginLog.Error(e, e.Message);
+            }
+        }
+        public async void SetVoice(ICharacter character, int voice)
+        {
+            if (character != null)
+            {
+                try
+                {
+                    var actorMemory = new ActorMemory();
+                    actorMemory.SetAddress(character.Address);
+                    MemoryService.Write(actorMemory.GetAddressOfProperty(nameof(ActorMemory.Voice)), voice, "Voice");
+                }
+                catch (Exception e)
+                {
+                    Plugin.PluginLog.Error(e, e.Message);
+                }
             }
         }
         public async void StopLipSync(ICharacter character)

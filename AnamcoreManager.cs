@@ -154,14 +154,14 @@ namespace AnamCore
 
             }
         }
-        public ushort GetCurrentEmoteId(ICharacter character)
+        public ushort GetCurrentAnimationId(ICharacter character)
         {
             try
             {
                 var actorMemory = new ActorMemory();
                 actorMemory.SetAddress(character.Address);
                 var animationMemory = actorMemory.Animation;
-                return MemoryService.Read<ushort>(actorMemory.GetAddressOfProperty(nameof(AnimationMemory.BaseOverride)));
+                return MemoryService.Read<ushort>(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.BaseOverride)));
             }
             catch
             {

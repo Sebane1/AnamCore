@@ -1,4 +1,4 @@
-﻿// © Anamnesis.
+// © Anamnesis.
 // Licensed under the MIT license.
 
 namespace Anamnesis.Memory;
@@ -19,15 +19,15 @@ public class ActorBasicMemory : MemoryBase
 		Load = 4,
 	}
 
-    [Bind(0x030)] public Utf8String NameBytes { get; set; }
-    [Bind(0x074)] public uint ObjectId { get; set; }
-    [Bind(0x080)] public uint DataId { get; set; }
-    [Bind(0x084)] public uint OwnerId { get; set; }
-    [Bind(0x088)] public ushort ObjectIndex { get; set; }
-    [Bind(0x08c, BindFlags.ActorRefresh)] public ActorTypes ObjectKind { get; set; }
-    [Bind(0x090)] public byte DistanceFromPlayerX { get; set; }
-    [Bind(0x092)] public byte DistanceFromPlayerY { get; set; }
-    [Bind(0x0118)] public RenderModes RenderMode { get; set; }
+	[Bind(0x030)] public Utf8String NameBytes { get; set; }
+	[Bind(0x074)] public uint ObjectId { get; set; }
+	[Bind(0x080)] public uint DataId { get; set; }
+	[Bind(0x084)] public uint OwnerId { get; set; }
+	[Bind(0x088)] public ushort ObjectIndex { get; set; }
+	[Bind(0x08c, BindFlags.ActorRefresh)] public ActorTypes ObjectKind { get; set; }
+	[Bind(0x090)] public byte DistanceFromPlayerX { get; set; }
+	[Bind(0x092)] public byte DistanceFromPlayerY { get; set; }
+	[Bind(0x0108)] public RenderModes RenderMode { get; set; }
 
     public string Id => $"n{this.NameHash}_d{this.DataId}_o{this.Address}";
 	public string IdNoAddress => $"n{this.NameHash}_d{this.DataId}"; ////_k{this.ObjectKind}";

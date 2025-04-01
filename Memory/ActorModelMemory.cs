@@ -1,4 +1,4 @@
-﻿// © Anamnesis.
+// © Anamnesis.
 // Licensed under the MIT license.
 
 namespace Anamnesis.Memory;
@@ -8,50 +8,50 @@ using System.ComponentModel;
 
 public class ActorModelMemory : MemoryBase
 {
-	/// <summary>
-	/// Known data paths.
-	/// </summary>
-	public enum DataPaths : short
-	{
-		MidlanderMasculine = 101,
-		MidlanderMasculineChild = 104,
-		MidlanderFeminine = 201,
-		MidlanderFeminineChild = 204,
-		HighlanderMasculine = 301,
-		HighlanderFeminine = 401,
-		ElezenMasculine = 501,
-		ElezenMasculineChild = 504,
-		ElezenFeminine = 601,
-		ElezenFeminineChild = 604,
-		MiqoteMasculine = 701,
-		MiqoteMasculineChild = 704,
-		MiqoteFeminine = 801,
-		MiqoteFeminineChild = 804,
-		RoegadynMasculine = 901,
-		RoegadynFeminine = 1001,
-		LalafellMasculine = 1101,
-		LalafellFeminine = 1201,
-		AuRaMasculine = 1301,
-		AuRaFeminine = 1401,
-		HrothgarMasculine = 1501,
-		////HrothgarFeminine = 1601,
-		VieraMasculine = 1701,
-		VieraFeminine = 1801,
-		PadjalMasculine = 9104,
-		PadjalFeminine = 9204,
-	}
+    /// <summary>
+    /// Known data paths.
+    /// </summary>
+    public enum DataPaths : short
+    {
+        MidlanderMasculine = 101,
+        MidlanderMasculineChild = 104,
+        MidlanderFeminine = 201,
+        MidlanderFeminineChild = 204,
+        HighlanderMasculine = 301,
+        HighlanderFeminine = 401,
+        ElezenMasculine = 501,
+        ElezenMasculineChild = 504,
+        ElezenFeminine = 601,
+        ElezenFeminineChild = 604,
+        MiqoteMasculine = 701,
+        MiqoteMasculineChild = 704,
+        MiqoteFeminine = 801,
+        MiqoteFeminineChild = 804,
+        RoegadynMasculine = 901,
+        RoegadynFeminine = 1001,
+        LalafellMasculine = 1101,
+        LalafellFeminine = 1201,
+        AuRaMasculine = 1301,
+        AuRaFeminine = 1401,
+        HrothgarMasculine = 1501,
+        HrothgarFeminine = 1601,
+        VieraMasculine = 1701,
+        VieraFeminine = 1801,
+        PadjalMasculine = 9104,
+        PadjalFeminine = 9204,
+    }
 
-	[Bind(0x030, BindFlags.Pointer)] public ExtendedWeaponMemory? Weapons { get; set; }
-	[Bind(0x050)] public TransformMemory? Transform { get; set; }
-	[Bind(0x0A0, BindFlags.Pointer | BindFlags.OnlyInGPose)] public SkeletonMemory? Skeleton { get; set; }
-	[Bind(0x148, BindFlags.Pointer)] public BustMemory? Bust { get; set; }
+    [Bind(0x030, BindFlags.Pointer)] public ExtendedWeaponMemory? Weapons { get; set; }
+    [Bind(0x050)] public TransformMemory? Transform { get; set; }
+    [Bind(0x0A0, BindFlags.Pointer | BindFlags.OnlyInGPose | BindFlags.DontCacheOffsets)] public SkeletonMemory? Skeleton { get; set; }
+    [Bind(0x148, BindFlags.Pointer)] public BustMemory? Bust { get; set; }
     [Bind(0x290)] public Color Tint { get; set; }
     [Bind(0x2A4)] public float Height { get; set; }
     [Bind(0x2E0)] public float Wetness { get; set; }
     [Bind(0x2EC)] public float Drenched { get; set; }
-    [Bind(0xA90)] public short DataPath { get; set; }
-    [Bind(0xA94)] public byte DataHead { get; set; }
-    [Bind(0xBE0, 0x028, BindFlags.Pointer)] public ExtendedAppearanceMemory? ExtendedAppearance { get; set; }
+    [Bind(0xAA0)] public short DataPath { get; set; }
+    [Bind(0xAA4)] public byte DataHead { get; set; }
+    [Bind(0xBF0, 0x028, BindFlags.Pointer)] public ExtendedAppearanceMemory? ExtendedAppearance { get; set; }
 
     public bool LockWetness
 	{

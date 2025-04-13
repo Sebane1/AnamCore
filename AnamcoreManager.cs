@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SamplePlugin;
 using System.Diagnostics;
 using Dalamud.Game.ClientState.Objects.Types;
 using System.Threading;
@@ -34,10 +33,8 @@ namespace AnamCore
         private int _defaultCharacterModeInput = 0;
         private int _defaultCharacterModeRaw = 0;
         ConcurrentDictionary<string, string> _currentlyEmotingCharacters = new ConcurrentDictionary<string, string>();
-        public Plugin Plugin { get; private set; }
-        public AnamcoreManager(Plugin plugin)
+        public AnamcoreManager()
         {
-            Plugin = plugin;
             try
             {
                 _memoryService = new MemoryService();
@@ -68,7 +65,6 @@ namespace AnamCore
             }
             catch (Exception e)
             {
-                Plugin.PluginLog.Error(e, e.Message);
             }
         }
         public async void TriggerEmote(nint character, uint animationId)
@@ -83,7 +79,7 @@ namespace AnamCore
             }
             catch (Exception e)
             {
-                Plugin.PluginLog.Warning(e, e.Message);
+
             }
         }
 
@@ -222,11 +218,9 @@ namespace AnamCore
                     Thread.Sleep(10000);
                     StopLipSync(character);
                 });
-                Plugin.PluginLog.Debug("Lipsync Succeeded.");
             }
             catch (Exception e)
             {
-                Plugin.PluginLog.Error(e, e.Message);
             }
         }
         public async void SetVoice(ICharacter character, int voice)
@@ -241,7 +235,6 @@ namespace AnamCore
                 }
                 catch (Exception e)
                 {
-                    Plugin.PluginLog.Error(e, e.Message);
                 }
             }
         }
@@ -255,11 +248,9 @@ namespace AnamCore
                     actorMemory.SetAddress(character.Address);
                     var animationMemory = actorMemory.Animation;
                     MemoryService.Write(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.LipsOverride)), 154, "Lipsync");
-                    Plugin.PluginLog.Debug("Lipsync Stop Succeeded.");
                 }
                 catch (Exception e)
                 {
-                    Plugin.PluginLog.Error(e, e.Message);
                 }
             }
         }

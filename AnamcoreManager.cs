@@ -67,7 +67,7 @@ namespace AnamCore
             {
             }
         }
-        public async void TriggerEmote(nint character, ushort animationId)
+        public async void TriggerEmote(nint character, uint animationId)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace AnamCore
             }
         }
 
-        public async void TriggerEmoteTimed(ICharacter character, ushort animationId, int time = 2000)
+        public async void TriggerEmoteTimed(ICharacter character, uint animationId, int time = 2000)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace AnamCore
                 var animationMemory = actorMemory.Animation;
                 if (animationMemory.BaseOverride != animationId)
                 {
-                    animationMemory!.BaseOverride = animationId;
+                    animationMemory!.BaseOverride = (ushort)animationId;
                     MemoryService.Write(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.BaseOverride)), animationId, "Base Override");
                 }
                 byte originalMode = MemoryService.Read<byte>(actorMemory.GetAddressOfProperty(nameof(ActorMemory.CharacterModeRaw)));

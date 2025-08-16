@@ -167,9 +167,9 @@ public class CharacterFile : JsonFileBase
 			this.EnableHighlights = actor.Customize?.EnableHighlights;
 			this.HairTone = actor.Customize?.HairTone;
 			this.Highlights = actor.Customize?.Highlights;
-			this.HairColor = actor.ModelObject?.ExtendedAppearance?.HairColor;
-			this.HairGloss = actor.ModelObject?.ExtendedAppearance?.HairGloss;
-			this.HairHighlight = actor.ModelObject?.ExtendedAppearance?.HairHighlight;
+			//this.HairColor = actor.ModelObject?.ExtendedAppearance?.HairColor;
+			//this.HairGloss = actor.ModelObject?.ExtendedAppearance?.HairGloss;
+			//this.HairHighlight = actor.ModelObject?.ExtendedAppearance?.HairHighlight;
 		}
 
 		if (this.IncludeSection(SaveModes.AppearanceFace, mode) || this.IncludeSection(SaveModes.AppearanceBody, mode))
@@ -195,10 +195,10 @@ public class CharacterFile : JsonFileBase
 			this.LipsToneFurPattern = actor.Customize?.LipsToneFurPattern;
 			this.FacePaint = actor.Customize?.FacePaint;
 			this.FacePaintColor = actor.Customize?.FacePaintColor;
-			this.LeftEyeColor = actor.ModelObject?.ExtendedAppearance?.LeftEyeColor;
-			this.RightEyeColor = actor.ModelObject?.ExtendedAppearance?.RightEyeColor;
-			this.LimbalRingColor = actor.ModelObject?.ExtendedAppearance?.LimbalRingColor;
-			this.MouthColor = actor.ModelObject?.ExtendedAppearance?.MouthColor;
+			//this.LeftEyeColor = actor.ModelObject?.ExtendedAppearance?.LeftEyeColor;
+			//this.RightEyeColor = actor.ModelObject?.ExtendedAppearance?.RightEyeColor;
+			//this.LimbalRingColor = actor.ModelObject?.ExtendedAppearance?.LimbalRingColor;
+			//this.MouthColor = actor.ModelObject?.ExtendedAppearance?.MouthColor;
 		}
 
 		if (this.IncludeSection(SaveModes.AppearanceBody, mode))
@@ -209,11 +209,11 @@ public class CharacterFile : JsonFileBase
 			this.TailEarsType = actor.Customize?.TailEarsType;
 			this.Bust = actor.Customize?.Bust;
 
-			this.HeightMultiplier = actor.ModelObject?.Height;
-			this.SkinColor = actor.ModelObject?.ExtendedAppearance?.SkinColor;
-			this.SkinGloss = actor.ModelObject?.ExtendedAppearance?.SkinGloss;
-			this.MuscleTone = actor.ModelObject?.ExtendedAppearance?.MuscleTone;
-			this.BustScale = actor.ModelObject?.Bust?.Scale;
+			//this.HeightMultiplier = actor.ModelObject?.Height;
+			//this.SkinColor = actor.ModelObject?.ExtendedAppearance?.SkinColor;
+			//this.SkinGloss = actor.ModelObject?.ExtendedAppearance?.SkinGloss;
+			//this.MuscleTone = actor.ModelObject?.ExtendedAppearance?.MuscleTone;
+			//this.BustScale = actor.ModelObject?.Bust?.Scale;
 			this.Transparency = actor.Transparency;
 		}
 	}
@@ -376,39 +376,39 @@ public class CharacterFile : JsonFileBase
 
 		//Log.Verbose("Begin reading Extended Appearance from file");
 
-		if (actor.ModelObject?.ExtendedAppearance != null)
-		{
-			if (this.IncludeSection(SaveModes.AppearanceHair, mode))
-			{
-				actor.ModelObject.ExtendedAppearance.HairColor = this.HairColor ?? actor.ModelObject.ExtendedAppearance.HairColor;
-				actor.ModelObject.ExtendedAppearance.HairGloss = this.HairGloss ?? actor.ModelObject.ExtendedAppearance.HairGloss;
-				actor.ModelObject.ExtendedAppearance.HairHighlight = this.HairHighlight ?? actor.ModelObject.ExtendedAppearance.HairHighlight;
-			}
+		//if (actor.ModelObject?.ExtendedAppearance != null)
+		//{
+		//	if (this.IncludeSection(SaveModes.AppearanceHair, mode))
+		//	{
+		//		actor.ModelObject.ExtendedAppearance.HairColor = this.HairColor ?? actor.ModelObject.ExtendedAppearance.HairColor;
+		//		actor.ModelObject.ExtendedAppearance.HairGloss = this.HairGloss ?? actor.ModelObject.ExtendedAppearance.HairGloss;
+		//		actor.ModelObject.ExtendedAppearance.HairHighlight = this.HairHighlight ?? actor.ModelObject.ExtendedAppearance.HairHighlight;
+		//	}
 
-			if (this.IncludeSection(SaveModes.AppearanceFace, mode))
-			{
-				actor.ModelObject.ExtendedAppearance.LeftEyeColor = this.LeftEyeColor ?? actor.ModelObject.ExtendedAppearance.LeftEyeColor;
-				actor.ModelObject.ExtendedAppearance.RightEyeColor = this.RightEyeColor ?? actor.ModelObject.ExtendedAppearance.RightEyeColor;
-				actor.ModelObject.ExtendedAppearance.LimbalRingColor = this.LimbalRingColor ?? actor.ModelObject.ExtendedAppearance.LimbalRingColor;
-				actor.ModelObject.ExtendedAppearance.MouthColor = this.MouthColor ?? actor.ModelObject.ExtendedAppearance.MouthColor;
-			}
+		//	if (this.IncludeSection(SaveModes.AppearanceFace, mode))
+		//	{
+		//		actor.ModelObject.ExtendedAppearance.LeftEyeColor = this.LeftEyeColor ?? actor.ModelObject.ExtendedAppearance.LeftEyeColor;
+		//		actor.ModelObject.ExtendedAppearance.RightEyeColor = this.RightEyeColor ?? actor.ModelObject.ExtendedAppearance.RightEyeColor;
+		//		actor.ModelObject.ExtendedAppearance.LimbalRingColor = this.LimbalRingColor ?? actor.ModelObject.ExtendedAppearance.LimbalRingColor;
+		//		actor.ModelObject.ExtendedAppearance.MouthColor = this.MouthColor ?? actor.ModelObject.ExtendedAppearance.MouthColor;
+		//	}
 
-			if (this.IncludeSection(SaveModes.AppearanceBody, mode))
-			{
-				actor.ModelObject.ExtendedAppearance.SkinColor = this.SkinColor ?? actor.ModelObject.ExtendedAppearance.SkinColor;
-				actor.ModelObject.ExtendedAppearance.SkinGloss = this.SkinGloss ?? actor.ModelObject.ExtendedAppearance.SkinGloss;
-				actor.ModelObject.ExtendedAppearance.MuscleTone = this.MuscleTone ?? actor.ModelObject.ExtendedAppearance.MuscleTone;
-				actor.Transparency = this.Transparency ?? actor.Transparency;
+		//	if (this.IncludeSection(SaveModes.AppearanceBody, mode))
+		//	{
+		//		actor.ModelObject.ExtendedAppearance.SkinColor = this.SkinColor ?? actor.ModelObject.ExtendedAppearance.SkinColor;
+		//		actor.ModelObject.ExtendedAppearance.SkinGloss = this.SkinGloss ?? actor.ModelObject.ExtendedAppearance.SkinGloss;
+		//		actor.ModelObject.ExtendedAppearance.MuscleTone = this.MuscleTone ?? actor.ModelObject.ExtendedAppearance.MuscleTone;
+		//		actor.Transparency = this.Transparency ?? actor.Transparency;
 
-				if (Float.IsValid(this.HeightMultiplier))
-					actor.ModelObject.Height = this.HeightMultiplier ?? actor.ModelObject.Height;
+		//		if (Float.IsValid(this.HeightMultiplier))
+		//			actor.ModelObject.Height = this.HeightMultiplier ?? actor.ModelObject.Height;
 
-				if (actor.ModelObject.Bust?.Scale != null && Vector.IsValid(this.BustScale))
-				{
-					actor.ModelObject.Bust.Scale = this.BustScale ?? actor.ModelObject.Bust.Scale;
-				}
-			}
-		}
+		//		if (actor.ModelObject.Bust?.Scale != null && Vector.IsValid(this.BustScale))
+		//		{
+		//			actor.ModelObject.Bust.Scale = this.BustScale ?? actor.ModelObject.Bust.Scale;
+		//		}
+		//	}
+		//}
 
 		actor.AutomaticRefreshEnabled = true;
 		actor.EnableReading = true;

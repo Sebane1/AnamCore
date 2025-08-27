@@ -259,13 +259,7 @@ public class MemoryService : ServiceBase<MemoryService>
 	{
 		Process = process;
 
-		if (!Process.Responding)
-			throw new Exception("Target process id not responding");
-
-		if (process.MainModule == null)
-			throw new Exception("Process has no main module");
-
-		// checke the game version as soon as we can
+		// check the game version as soon as we can
 		string file = Path.GetDirectoryName(MemoryService.GamePath) + "\\ffxivgame.ver";
 		string gameVer = File.ReadAllText(file);
 

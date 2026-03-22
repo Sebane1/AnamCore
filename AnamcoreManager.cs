@@ -18,8 +18,15 @@ using System.Numerics;
 
 namespace AnamCore
 {
+    /// <summary>
+    /// Writes animation state via embedded Anamnesis actor memory (e.g. BaseOverride, CharacterModeRaw).
+    /// Those layouts are patch-sensitive; stale offsets can corrupt actor state and cause intermittent freezes.
+    /// Compare with imchillin/Anamnesis actor structures after each FFXIV update.
+    /// </summary>
     public class AnamcoreManager
     {
+        private static bool IsValidActorAddress(nint address) => address != nint.Zero;
+
         private MemoryService _memoryService;
         private SettingsService _settingService;
         private GameDataService _gameDataService;
@@ -69,6 +76,10 @@ namespace AnamCore
         }
         public async void TriggerEmote(nint character, uint animationId)
         {
+            if (!IsValidActorAddress(character))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -85,6 +96,10 @@ namespace AnamCore
 
         public async void TriggerEmoteTimed(ICharacter character, uint animationId, int time = 2000)
         {
+            if (character == null || !IsValidActorAddress(character.Address))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -101,7 +116,10 @@ namespace AnamCore
                 {
                     ICharacter reference = character;
                     Thread.Sleep(time);
-                    StopEmote(reference.Address);
+                    if (reference != null && IsValidActorAddress(reference.Address))
+                    {
+                        StopEmote(reference.Address);
+                    }
                 });
             }
             catch
@@ -111,6 +129,10 @@ namespace AnamCore
         }
         public void TriggerEmoteUntilPlayerMoves(IPlayerCharacter player, ICharacter character, ushort emoteId)
         {
+            if (player == null || character == null || !IsValidActorAddress(character.Address))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -152,6 +174,10 @@ namespace AnamCore
         }
         public ushort GetCurrentAnimationId(ICharacter character)
         {
+            if (character == null || !IsValidActorAddress(character.Address))
+            {
+                return 0;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -168,6 +194,10 @@ namespace AnamCore
 
         public async void StopEmote(nint character)
         {
+            if (!IsValidActorAddress(character))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -187,6 +217,10 @@ namespace AnamCore
         }
         public async void StopEmote(ICharacter character, byte originalMode)
         {
+            if (character == null || !IsValidActorAddress(character.Address))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -206,6 +240,10 @@ namespace AnamCore
         }
         public async void TriggerLipSync(ICharacter character, int lipSyncType)
         {
+            if (character == null || !IsValidActorAddress(character.Address))
+            {
+                return;
+            }
             try
             {
                 var actorMemory = new ActorMemory();
@@ -225,7 +263,7 @@ namespace AnamCore
         }
         public async void SetVoice(ICharacter character, int voice)
         {
-            if (character != null)
+            if (character != null && IsValidActorAddress(character.Address))
             {
                 try
                 {
@@ -240,7 +278,7 @@ namespace AnamCore
         }
         public async void StopLipSync(ICharacter character)
         {
-            if (character != null)
+            if (character != null && IsValidActorAddress(character.Address))
             {
                 try
                 {

@@ -1,11 +1,11 @@
-﻿// © Anamnesis.
+// © Anamnesis.
 // Licensed under the MIT license.
 
 namespace Anamnesis.Memory;
 
 public class ActorEquipmentMemory : MemoryBase
 {
-	[Bind(0x000)] public ItemMemory? Head { get; set; }
+    [Bind(0x000)] public ItemMemory? Head { get; set; }
     [Bind(0x008)] public ItemMemory? Chest { get; set; }
     [Bind(0x010)] public ItemMemory? Arms { get; set; }
     [Bind(0x018)] public ItemMemory? Legs { get; set; }

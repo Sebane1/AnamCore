@@ -1,4 +1,4 @@
-﻿// © Anamnesis.
+// © Anamnesis.
 // Licensed under the MIT license.
 
 namespace Anamnesis.Actor;
@@ -133,19 +133,19 @@ public class PoseService : ServiceBase<PoseService>
 	{
 		await base.Initialize();
 
-		this.freezePosition = new NopHookViewModel(AddressService.SkeletonFreezePosition, 5);
-		this.freezePosition2 = new NopHookViewModel(AddressService.SkeletonFreezePosition2, 5);
-		this.freezeRot1 = new NopHookViewModel(AddressService.SkeletonFreezeRotation, 6);
-		this.freezeRot2 = new NopHookViewModel(AddressService.SkeletonFreezeRotation2, 6);
-		this.freezeRot3 = new NopHookViewModel(AddressService.SkeletonFreezeRotation3, 4);
-		this.freezeScale1 = new NopHookViewModel(AddressService.SkeletonFreezeScale, 6);
-		this.freeseScale2 = new NopHookViewModel(AddressService.SkeletonFreezeScale2, 6);
-		this.freezePhysics1 = new NopHookViewModel(AddressService.SkeletonFreezePhysics, 4);
-		this.freezePhysics2 = new NopHookViewModel(AddressService.SkeletonFreezePhysics2, 3);
-		this.freezePhysics3 = new NopHookViewModel(AddressService.SkeletonFreezePhysics3, 4);
-		this.freezeWorldPosition = new NopHookViewModel(AddressService.WorldPositionFreeze, 16);
-		this.freezeWorldRotation = new NopHookViewModel(AddressService.WorldRotationFreeze, 4);
-		this.freezeGposeTargetPosition = new NopHookViewModel(AddressService.GPoseCameraTargetPositionFreeze, 5);
+		this.freezePosition = AddressService.SkeletonFreezePosition != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezePosition, 5) : null;
+		this.freezePosition2 = AddressService.SkeletonFreezePosition2 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezePosition2, 5) : null;
+		this.freezeRot1 = AddressService.SkeletonFreezeRotation != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezeRotation, 6) : null;
+		this.freezeRot2 = AddressService.SkeletonFreezeRotation2 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezeRotation2, 6) : null;
+		this.freezeRot3 = AddressService.SkeletonFreezeRotation3 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezeRotation3, 4) : null;
+		this.freezeScale1 = AddressService.SkeletonFreezeScale != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezeScale, 6) : null;
+		this.freeseScale2 = AddressService.SkeletonFreezeScale2 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezeScale2, 6) : null;
+		this.freezePhysics1 = AddressService.SkeletonFreezePhysics != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezePhysics, 4) : null;
+		this.freezePhysics2 = AddressService.SkeletonFreezePhysics2 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezePhysics2, 3) : null;
+		this.freezePhysics3 = AddressService.SkeletonFreezePhysics3 != IntPtr.Zero ? new NopHookViewModel(AddressService.SkeletonFreezePhysics3, 4) : null;
+		this.freezeWorldPosition = AddressService.WorldPositionFreeze != IntPtr.Zero ? new NopHookViewModel(AddressService.WorldPositionFreeze, 16) : null;
+		this.freezeWorldRotation = AddressService.WorldRotationFreeze != IntPtr.Zero ? new NopHookViewModel(AddressService.WorldRotationFreeze, 4) : null;
+		this.freezeGposeTargetPosition = AddressService.GPoseCameraTargetPositionFreeze != IntPtr.Zero ? new NopHookViewModel(AddressService.GPoseCameraTargetPositionFreeze, 5) : null;
 
 		GposeService.GposeStateChanged += this.OnGposeStateChanged;
 

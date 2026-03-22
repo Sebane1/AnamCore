@@ -31,33 +31,22 @@ public class ActorMemory : ActorBasicMemory
 		Performance = 16,
 	}
 
-	[Flags]
-	public enum CharacterFlagDefs : byte
-	{
-		None = 0,
-		WeaponsVisible = 1 << 0,
-		WeaponsDrawn = 1 << 2,
-		VisorToggled = 1 << 4,
-	}
-
+    // Offsets aligned with FFXIVClientStructs Character / imchillin/Anamnesis master.
     [Bind(0x01CA)] public byte ClassJob { get; set; } // Source: CharacterData; Calculated using GameObject size + ClassJob offset
-    [Bind(0x0670, BindFlags.Pointer)] public ActorMemory? Mount { get; set; } // Targets object within MountContainer
-    [Bind(0x0678)] public ushort MountId { get; set; }
-    [Bind(0x06D8, BindFlags.Pointer)] public ActorMemory? Companion { get; set; } // Targets object within CompanionContainer
-    [Bind(0x08B8)] public ActorEquipmentMemory? Equipment { get; set; }
-    [Bind(0x0908)] public ActorCustomizeMemory? Customize { get; set; }
-    [Bind(0x0926, BindFlags.ActorRefresh)] public bool HatHidden { get; set; }
-    [Bind(0x0927, BindFlags.ActorRefresh)] public CharacterFlagDefs CharacterFlags { get; set; }
-    [Bind(0x0960, BindFlags.Pointer)] public ActorMemory? Ornament { get; set; } // Targets object within OrnamentContainer
-    [Bind(0x0968)] public ushort OrnamentId { get; set; }
-    [Bind(0x0A20)] public AnimationMemory? Animation { get; set; }
-    [Bind(0x1A48)] public byte Voice { get; set; }
-    [Bind(0x1B28, BindFlags.ActorRefresh)] public int ModelType { get; set; }
-    [Bind(0x1B94)] public bool IsMotionDisabled { get; set; }
-    [Bind(0x22D8)] public float Transparency { get; set; }
-    [Bind(0x2354)] public byte CharacterModeRaw { get; set; }
-    [Bind(0x2355)] public byte CharacterModeInput { get; set; }
-    [Bind(0x2374)] public byte AttachmentPoint { get; set; } // Part of Ornament
+    [Bind(0x0680, BindFlags.Pointer)] public ActorMemory? Mount { get; set; } // Targets object within MountContainer
+    [Bind(0x0688)] public ushort MountId { get; set; }
+    [Bind(0x06E8, BindFlags.Pointer)] public ActorMemory? Companion { get; set; } // Targets object within CompanionContainer
+    [Bind(Actor.DrawDataOffset)] public DrawDataMemory DrawData { get; set; } = new();
+    [Bind(0x0970, BindFlags.Pointer)] public ActorMemory? Ornament { get; set; } // Targets object within OrnamentContainer
+    [Bind(0x0978)] public ushort OrnamentId { get; set; }
+    [Bind(0x0A30)] public AnimationMemory? Animation { get; set; }
+    [Bind(0x1A58)] public byte Voice { get; set; }
+    [Bind(0x1B38, BindFlags.ActorRefresh)] public int ModelType { get; set; }
+    [Bind(0x1BA4)] public bool IsMotionDisabled { get; set; }
+    [Bind(0x22E8)] public float Transparency { get; set; }
+    [Bind(0x2364)] public byte CharacterModeRaw { get; set; }
+    [Bind(0x2365)] public byte CharacterModeInput { get; set; }
+    [Bind(0x2384)] public byte AttachmentPoint { get; set; } // Part of Ornament
 
 
     public PinnedActor? Pinned { get; set; }
@@ -98,19 +87,18 @@ public class ActorMemory : ActorBasicMemory
 	//[DependsOn(nameof(Companion))]
 	public bool HasCompanion => this.Companion != null;
 
-	//[DependsOn(nameof(CharacterFlags))]
 	public bool VisorToggled
 	{
-		get => this.CharacterFlags.HasFlag(CharacterFlagDefs.VisorToggled);
+		get => this.DrawData.CharacterFlags.HasFlag(DrawDataMemory.CharacterFlagDefs.VisorToggled);
 		set
 		{
 			if (value)
 			{
-				this.CharacterFlags |= CharacterFlagDefs.VisorToggled;
+				this.DrawData.CharacterFlags |= DrawDataMemory.CharacterFlagDefs.VisorToggled;
 			}
 			else
 			{
-				this.CharacterFlags &= ~CharacterFlagDefs.VisorToggled;
+				this.DrawData.CharacterFlags &= ~DrawDataMemory.CharacterFlagDefs.VisorToggled;
 			}
 		}
 	}

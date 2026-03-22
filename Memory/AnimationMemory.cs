@@ -9,7 +9,8 @@ using Anamnesis.Services;
 
 public class AnimationMemory : MemoryBase
 {
-	public const int AnimationSlotCount = 13;
+	// Must match game animation slot array length (Anamnesis master uses 14).
+	public const int AnimationSlotCount = 14;
 
 	private bool linkSpeeds = true;
 
@@ -19,6 +20,9 @@ public class AnimationMemory : MemoryBase
 		UpperBody = 1,
 		Facial = 2,
 		Add = 3,
+		Unk0 = 4,
+		Unk1 = 5,
+		Unk2 = 6,
 		Lips = 7,
 		Parts1 = 8,
 		Parts2 = 9,
@@ -32,6 +36,7 @@ public class AnimationMemory : MemoryBase
     [Bind(0x1F2)] public byte SpeedTrigger { get; set; }
     [Bind(0x2E6)] public ushort BaseOverride { get; set; }
     [Bind(0x2E8)] public ushort LipsOverride { get; set; }
+    [Bind(0x34E)] public byte Flags { get; set; }
 
     public bool BlendLocked { get; set; } = false;
 

@@ -251,11 +251,6 @@ namespace AnamCore
                 var animationMemory = actorMemory.Animation;
                 MemoryService.Write(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.LipsOverride)),
                     630, "Lipsync");
-                await Task.Run(delegate
-                {
-                    Thread.Sleep(10000);
-                    StopLipSync(character);
-                });
             }
             catch (Exception e)
             {

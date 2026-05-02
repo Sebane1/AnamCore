@@ -308,5 +308,41 @@ namespace AnamCore
                 }
             }
         }
+
+        /// <summary>
+        /// Make an NPC turn their head toward another game object by setting
+        /// the native TargetId on the Character struct (offset 0x2308).
+        /// The game engine handles head/eye tracking automatically for targeted entities.
+        /// </summary>
+        public unsafe void SetHeadTarget(nint characterAddress, uint targetEntityId)
+        {
+            if (!IsValidActorAddress(characterAddress) || characterAddress == nint.Zero)
+                return;
+            try
+            {
+                // Character.TargetId is at offset 0x2308 from Character base (GameObjectId, 8 bytes)
+                // GameObjectId layout: [0x00] uint ObjectId, [0x04] byte Type
+                // Type 0 = entity ID based lookup
+                nint targetIdAddr = characterAddress + 0x2308;
+                *(uint*)targetIdAddr = targetEntityId;       // ObjectId
+                *(byte*)(targetIdAddr + 4) = 0;              // Type = 0 (entity lookup)
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Clear the NPC's head target so they look forward.
+        /// </summary>
+        public unsafe void ClearHeadTarget(nint characterAddress)
+        {
+            if (!IsValidActorAddress(characterAddress) || characterAddress == nint.Zero)
+                return;
+            try
+            {
+                nint targetIdAddr = characterAddress + 0x2308;
+                *(ulong*)targetIdAddr = 0xE0000000; // Invalid entity = no target
+            }
+            catch { }
+        }
     }
 }

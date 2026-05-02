@@ -224,11 +224,12 @@ namespace AnamCore
         /// </summary>
         public unsafe void ForceStopEmote(nint characterAddress)
         {
-            if (!IsValidActorAddress(characterAddress))
+            if (!IsValidActorAddress(characterAddress) || characterAddress == nint.Zero)
                 return;
             try
             {
                 var chara = (Character*)characterAddress;
+                if (chara == null) return;
                 chara->Timeline.BaseOverride = 0;
                 chara->SetMode(CharacterModes.Normal, 0);
                 chara->Timeline.TimelineSequencer.PlayTimeline(3); // 3 = idle

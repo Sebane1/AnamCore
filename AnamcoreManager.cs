@@ -3,6 +3,7 @@ using Anamnesis.Core.Memory;
 using Anamnesis.Memory;
 using Anamnesis.Services;
 using Anamnesis;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -209,11 +210,30 @@ namespace AnamCore
                 MemoryService.Write(actorMemory.GetAddressOfProperty(nameof(ActorMemory.CharacterModeRaw)), _defaultCharacterModeRaw, "Animation Mode Override");
                 MemoryService.Write(actorMemory.GetAddressOfProperty(nameof(ActorMemory.CharacterModeRaw)), ActorMemory.CharacterModes.Normal, "Animation Mode Override");
                 MemoryService.Write(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.BaseOverride)), _defaultBaseOverride, "Base Override");
+                // Interrupt: zero the FullBody animation slot to force-cancel the active timeline
+                animationMemory.AnimationIds[(int)AnimationMemory.AnimationSlots.FullBody].Value = 0;
             }
             catch
             {
 
             }
+        }
+        /// <summary>
+        /// Force-cancel an emote using Brio's native approach: SetMode + PlayTimeline.
+        /// This directly tells the game engine to interrupt the animation timeline.
+        /// </summary>
+        public unsafe void ForceStopEmote(nint characterAddress)
+        {
+            if (!IsValidActorAddress(characterAddress))
+                return;
+            try
+            {
+                var chara = (Character*)characterAddress;
+                chara->Timeline.BaseOverride = 0;
+                chara->SetMode(CharacterModes.Normal, 0);
+                chara->Timeline.TimelineSequencer.PlayTimeline(3); // 3 = idle
+            }
+            catch { }
         }
         public async void StopEmote(ICharacter character, byte originalMode)
         {

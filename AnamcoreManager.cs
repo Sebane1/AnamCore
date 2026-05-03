@@ -344,5 +344,28 @@ namespace AnamCore
             }
             catch { }
         }
+
+        /// <summary>
+        /// Forces the character to equip specific weapon models.
+        /// </summary>
+        public unsafe void SetWeapon(ICharacter character, ulong mainHandModel, ulong offHandModel)
+        {
+            if (character == null || !IsValidActorAddress(character.Address)) return;
+            try
+            {
+                var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)character.Address;
+                
+                chara->DrawData.LoadWeapon(
+                    FFXIVClientStructs.FFXIV.Client.Game.Character.DrawDataContainer.WeaponSlot.MainHand,
+                    new FFXIVClientStructs.FFXIV.Client.Game.Character.WeaponModelId() { Value = mainHandModel },
+                    0, 0, 0, 0, false);
+
+                chara->DrawData.LoadWeapon(
+                    FFXIVClientStructs.FFXIV.Client.Game.Character.DrawDataContainer.WeaponSlot.OffHand,
+                    new FFXIVClientStructs.FFXIV.Client.Game.Character.WeaponModelId() { Value = offHandModel },
+                    0, 0, 0, 0, false);
+            }
+            catch { }
+        }
     }
 }

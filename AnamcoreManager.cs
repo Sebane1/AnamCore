@@ -75,7 +75,7 @@ namespace AnamCore
             {
             }
         }
-        public async void TriggerEmote(nint character, uint animationId)
+        public void TriggerEmote(nint character, uint animationId)
         {
             if (!IsValidActorAddress(character))
             {
@@ -95,7 +95,7 @@ namespace AnamCore
             }
         }
 
-        public async void TriggerEmoteTimed(ICharacter character, uint animationId, int time = 2000)
+        public void TriggerEmoteTimed(ICharacter character, uint animationId, int time = 2000)
         {
             if (character == null || !IsValidActorAddress(character.Address))
             {
@@ -193,7 +193,7 @@ namespace AnamCore
             return 0;
         }
 
-        public async void StopEmote(nint character)
+        public void StopEmote(nint character)
         {
             if (!IsValidActorAddress(character))
             {
@@ -236,7 +236,7 @@ namespace AnamCore
             }
             catch { }
         }
-        public async void StopEmote(ICharacter character, byte originalMode)
+        public void StopEmote(ICharacter character, byte originalMode)
         {
             if (character == null || !IsValidActorAddress(character.Address))
             {
@@ -259,7 +259,7 @@ namespace AnamCore
 
             }
         }
-        public async void TriggerLipSync(ICharacter character, int lipSyncType)
+        public void TriggerLipSync(ICharacter character, int lipSyncType)
         {
             if (character == null || !IsValidActorAddress(character.Address))
             {
@@ -277,7 +277,7 @@ namespace AnamCore
             {
             }
         }
-        public async void SetVoice(ICharacter character, int voice)
+        public void SetVoice(ICharacter character, int voice)
         {
             if (character != null && IsValidActorAddress(character.Address))
             {
@@ -292,7 +292,7 @@ namespace AnamCore
                 }
             }
         }
-        public async void StopLipSync(ICharacter character)
+        public void StopLipSync(ICharacter character)
         {
             if (character != null && IsValidActorAddress(character.Address))
             {

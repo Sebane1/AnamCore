@@ -75,7 +75,7 @@ namespace AnamCore
             {
             }
         }
-        public unsafe void TriggerEmote(nint characterAddress, uint animationId)
+        public unsafe void TriggerEmote(nint characterAddress, uint animationId, bool forceBaseOverride = false)
         {
             if (!IsValidActorAddress(characterAddress) || characterAddress == nint.Zero)
                 return;
@@ -86,7 +86,7 @@ namespace AnamCore
                 
                 // For movement states (Walk, Run, Sprint), we must use BaseOverride so it loops correctly.
                 // 13 = Walk, 22 = Run, 30 = Sprint, 34 = Combat Stance
-                if (animationId == 13 || animationId == 22 || animationId == 30 || animationId == 34)
+                if (animationId == 13 || animationId == 22 || animationId == 30 || animationId == 34 || forceBaseOverride)
                 {
                     chara->Timeline.BaseOverride = (ushort)animationId;
                     chara->SetMode(CharacterModes.Normal, 0);

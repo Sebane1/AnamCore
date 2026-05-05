@@ -75,24 +75,31 @@ namespace AnamCore
             {
             }
         }
-        public void TriggerEmote(nint character, uint animationId)
+        public unsafe void TriggerEmote(nint characterAddress, uint animationId)
         {
-            if (!IsValidActorAddress(character))
-            {
+            if (!IsValidActorAddress(characterAddress) || characterAddress == nint.Zero)
                 return;
-            }
             try
             {
-                var actorMemory = new ActorMemory();
-                actorMemory.SetAddress(character);
-                var animationMemory = actorMemory.Animation;
-                MemoryService.Write(animationMemory.GetAddressOfProperty(nameof(AnimationMemory.BaseOverride)), animationId, "Base Override");
-                MemoryService.Write(actorMemory.GetAddressOfProperty(nameof(ActorMemory.CharacterModeRaw)), ActorMemory.CharacterModes.Normal, "Animation Mode Override");
+                var chara = (Character*)characterAddress;
+                if (chara == null) return;
+                
+                // For movement states (Walk, Run, Sprint), we must use BaseOverride so it loops correctly.
+                // 13 = Walk, 22 = Run, 30 = Sprint, 34 = Combat Stance
+                if (animationId == 13 || animationId == 22 || animationId == 30 || animationId == 34)
+                {
+                    chara->Timeline.BaseOverride = (ushort)animationId;
+                    chara->SetMode(CharacterModes.Normal, 0);
+                }
+                else
+                {
+                    // For standard emotes and victory poses, use native PlayTimeline for smooth blending
+                    chara->Timeline.BaseOverride = 0;
+                    chara->SetMode(CharacterModes.Normal, 0);
+                    chara->Timeline.TimelineSequencer.PlayTimeline((ushort)animationId);
+                }
             }
-            catch (Exception e)
-            {
-
-            }
+            catch { }
         }
 
         public void TriggerEmoteTimed(ICharacter character, uint animationId, int time = 2000)

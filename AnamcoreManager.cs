@@ -330,12 +330,10 @@ namespace AnamCore
                 return;
             try
             {
-                // Character.TargetId is at offset 0x2308 from Character base (GameObjectId, 8 bytes)
-                // GameObjectId layout: [0x00] uint ObjectId, [0x04] byte Type
-                // Type 0 = entity ID based lookup
-                nint targetIdAddr = characterAddress + 0x2308;
-                *(uint*)targetIdAddr = targetEntityId;       // ObjectId
-                *(byte*)(targetIdAddr + 4) = 0;              // Type = 0 (entity lookup)
+                var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)characterAddress;
+                if (chara == null) return;
+                chara->TargetId.ObjectId = targetEntityId;
+                chara->TargetId.Type = 0;
             }
             catch { }
         }
@@ -349,8 +347,10 @@ namespace AnamCore
                 return;
             try
             {
-                nint targetIdAddr = characterAddress + 0x2308;
-                *(ulong*)targetIdAddr = 0xE0000000; // Invalid entity = no target
+                var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)characterAddress;
+                if (chara == null) return;
+                chara->TargetId.ObjectId = 0xE0000000;
+                chara->TargetId.Type = 0;
             }
             catch { }
         }

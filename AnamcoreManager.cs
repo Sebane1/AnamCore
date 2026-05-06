@@ -332,8 +332,12 @@ namespace AnamCore
             {
                 var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)characterAddress;
                 if (chara == null) return;
-                chara->TargetId.ObjectId = targetEntityId;
-                chara->TargetId.Type = 0;
+                
+                if (chara->TargetId.ObjectId != targetEntityId)
+                {
+                    chara->TargetId.ObjectId = targetEntityId;
+                    chara->TargetId.Type = 0;
+                }
             }
             catch { }
         }
@@ -349,8 +353,12 @@ namespace AnamCore
             {
                 var chara = (FFXIVClientStructs.FFXIV.Client.Game.Character.Character*)characterAddress;
                 if (chara == null) return;
-                chara->TargetId.ObjectId = 0xE0000000;
-                chara->TargetId.Type = 0;
+                
+                if (chara->TargetId.ObjectId != 0xE0000000)
+                {
+                    chara->TargetId.ObjectId = 0xE0000000;
+                    chara->TargetId.Type = 0;
+                }
             }
             catch { }
         }

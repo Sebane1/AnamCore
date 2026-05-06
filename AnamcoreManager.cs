@@ -84,9 +84,12 @@ namespace AnamCore
                 var chara = (Character*)characterAddress;
                 if (chara == null) return;
                 
-                // For movement states (Walk, Run, Sprint), we must use BaseOverride so it loops correctly.
-                // 13 = Walk, 22 = Run, 30 = Sprint, 34 = Combat Stance
-                if (animationId == 13 || animationId == 22 || animationId == 30 || animationId == 34 || forceBaseOverride)
+                // For movement states (Walk, Run, Sprint, Swim), we must use BaseOverride so it loops correctly.
+                // Land: 13 = Walk, 22 = Run, 30 = Sprint, 34 = Combat Stance
+                // Swim: 4947 = Swim Idle, 4950 = Swim Walk, 4954 = Swim Run, 4958 = Swim Sprint
+                if (animationId == 13 || animationId == 22 || animationId == 30 || animationId == 34
+                    || animationId == 4947 || animationId == 4950 || animationId == 4954 || animationId == 4958
+                    || forceBaseOverride)
                 {
                     chara->Timeline.BaseOverride = (ushort)animationId;
                     chara->SetMode(CharacterModes.Normal, 0);
